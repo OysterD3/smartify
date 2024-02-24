@@ -3,8 +3,8 @@ name: 'publish'
 # This will trigger the action on each push to the `release` branch.
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*'
 
 jobs:
   publish-tauri:
@@ -13,7 +13,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-20.04, windows-latest]
+        include:
+          - target: aarch64-apple-darwin
+            platform: macos-latest
+          - target: x86_64-apple-darwin
+            platform: macos-latest
+          - target: x86_64-unknown-linux-gnu
+            platform: ubuntu-20.04
+          - target: x86_64-pc-windows-msvc
+            platform: windows-latest
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -59,8 +67,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: 'App v__VERSION__'
+          tagName: Smartify-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: 'Smartify v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
           releaseDraft: true
           prerelease: false
