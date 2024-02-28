@@ -1,8 +1,8 @@
-import { useOpenAIStore } from '../stores/openai.ts';
+import { useOpenAIStore } from '../../stores/openai.ts';
 import {
   ChatCompletionResponse,
   useChatCompletionStreamMutation,
-} from '../api/chat.ts';
+} from '../../api/chat.ts';
 import { useRef } from 'react';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -20,8 +20,8 @@ const MessageInput = () => {
     appendMessages,
     setMessageContent,
   } = useOpenAIStore((state) => ({
-    initialPrompt: state.initialPrompt,
-    messages: state.messages,
+    initialPrompt: state.defaultInitialPrompt,
+    messages: state.chats[state.currentViewing].messages,
     selectedModel: state.selectedModel,
     appendMessages: state.appendMessages,
     setMessageContent: state.setMessageContent,

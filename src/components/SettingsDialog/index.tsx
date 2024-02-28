@@ -40,16 +40,16 @@ const SettingsDialog = ({
 }) => {
   const {
     setApiKey,
-    setInitialPrompt,
+    setDefaultInitialPrompt,
     apiKey,
-    initialPrompt,
+    defaultInitialPrompt,
     selectedModel,
     setSelectedModel,
   } = useOpenAIStore((state) => ({
     setApiKey: state.setApiKey,
-    setInitialPrompt: state.setInitialPrompt,
+    setDefaultInitialPrompt: state.setDefaultInitialPrompt,
     apiKey: state.apiKey,
-    initialPrompt: state.initialPrompt,
+    defaultInitialPrompt: state.defaultInitialPrompt,
     selectedModel: state.selectedModel,
     setSelectedModel: state.setSelectedModel,
   }));
@@ -65,14 +65,14 @@ const SettingsDialog = ({
   });
 
   useEffect(() => {
-    if (!initialPrompt || !apiKey || !selectedModel) {
+    if (!defaultInitialPrompt || !apiKey || !selectedModel) {
       setOpen(true);
     }
-  }, [apiKey, initialPrompt, selectedModel]);
+  }, [apiKey, defaultInitialPrompt, selectedModel]);
 
   const handleSave = (values: SettingsSchema) => {
     setApiKey(values.apiKey);
-    setInitialPrompt(values.prompt);
+    setDefaultInitialPrompt(values.prompt);
     setSelectedModel(values.model);
 
     setOpen(false);

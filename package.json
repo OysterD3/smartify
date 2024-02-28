@@ -28,6 +28,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "eventsource-parser": "^1.1.2",
+    "nanoid": "^5.0.6",
     "next-themes": "^0.2.1",
     "openai": "^4.28.0",
     "react": "^18.2.0",
