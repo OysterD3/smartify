@@ -1,39 +1,56 @@
 import { useOpenAIStore } from '../stores/openai.ts';
-import { useChatCompletionMutation } from '../api/chat.ts';
+import {
+  ChatCompletionResponse,
+  useChatCompletionStreamMutation,
+} from '../api/chat.ts';
 import { useRef } from 'react';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { createBEM } from '@/utils';
+import { createBEM, readAllChunks } from '@/utils';
 import '@/styles/components/message-input.scss';
+import { createParser } from 'eventsource-parser';
 
 const bem = createBEM('message-input');
 
 const MessageInput = () => {
-  const { initialPrompt, messages, selectedModel, appendMessages } =
-    useOpenAIStore((state) => ({
-      initialPrompt: state.initialPrompt,
-      messages: state.messages,
-      selectedModel: state.selectedModel,
-      appendMessages: state.appendMessages,
-    }));
-  const chatCompletions = useChatCompletionMutation();
+  const {
+    initialPrompt,
+    messages,
+    selectedModel,
+    appendMessages,
+    setMessageContent,
+  } = useOpenAIStore((state) => ({
+    initialPrompt: state.initialPrompt,
+    messages: state.messages,
+    selectedModel: state.selectedModel,
+    appendMessages: state.appendMessages,
+    setMessageContent: state.setMessageContent,
+  }));
+  const chatCompletions = useChatCompletionStreamMutation();
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSendMessage = async () => {
+    const clonedMessages = [...messages];
     const message = inputRef.current?.value;
     if (!message) return;
     const msgs = [...messages];
-    if (messages.length < 1) {
+    if (clonedMessages.length < 1) {
       msgs.push({
         role: 'system',
         content: initialPrompt,
       });
     }
     inputRef.current!.value = '';
+    appendMessages([
+      {
+        role: 'user',
+        content: message,
+      },
+    ]);
     const response = await chatCompletions.mutateAsync({
       model: selectedModel,
       messages: [
-        ...messages,
+        ...clonedMessages,
         {
           role: 'user',
           content: message,
@@ -42,11 +59,28 @@ const MessageInput = () => {
     });
     appendMessages([
       {
-        role: 'user',
-        content: message,
+        role: 'assistant',
+        content: '',
       },
-      response.choices[0].message,
     ]);
+    const parser = createParser((e) => {
+      if (e.type === 'event' && e.data !== '[DONE]') {
+        const data = JSON.parse(e.data) as ChatCompletionResponse;
+        if (data.choices[0].finish_reason === 'stop') {
+          return;
+        }
+        setMessageContent((messages) => {
+          const lastMessage = messages[messages.length - 1];
+          return {
+            index: messages.length - 1,
+            content: `${lastMessage.content}${data.choices[0].delta.content}`,
+          };
+        });
+      }
+    });
+    for await (const completion of readAllChunks(response)) {
+      parser.feed(completion);
+    }
   };
 
   return (

@@ -15,6 +15,9 @@ interface OpenAIStore {
   appendMessages: (messages: Message[]) => void;
   initialPrompt: string;
   setInitialPrompt: (prompt: string) => void;
+  setMessageContent: (
+    data: (messages: Message[]) => { index: number; content: string },
+  ) => void;
 }
 
 const persistentStore: StateStorage = {
@@ -42,6 +45,12 @@ export const useOpenAIStore = create<OpenAIStore>()(
         set((state) => ({ messages: [...state.messages, ...messages] })),
       initialPrompt: '',
       setInitialPrompt: (initialPrompt) => set({ initialPrompt }),
+      setMessageContent: (data) =>
+        set((state) => {
+          const { index, content } = data(state.messages);
+          state.messages[index].content = content;
+          return { messages: state.messages };
+        }),
     }),
     {
       name: 'openai-store',

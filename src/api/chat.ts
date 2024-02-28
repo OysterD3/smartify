@@ -1,6 +1,8 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
 import { useAxios } from './axiosClient.ts';
 import { useMutation } from '@tanstack/react-query';
+import { useOpenAIStore } from '@/stores/openai.ts';
+import { readAllChunks } from '@/utils';
 
 export const chatKeys = createQueryKeys('chat', {
   chatCompletion: (params: { messages: string; model: string }) => [
@@ -19,7 +21,7 @@ type Usage = {
   total_tokens: number;
 };
 
-type ChatCompletionResponse = {
+export type ChatCompletionResponse = {
   id: string;
   object: string;
   created: number;
@@ -27,23 +29,43 @@ type ChatCompletionResponse = {
   system_fingerprint: string;
   choices: {
     index: number;
-    message: Message;
     logprobs: null;
     finish_reason: string;
+    delta: {
+      content: string;
+    };
   }[];
   usage: Usage;
 };
 
-export const useChatCompletionMutation = () => {
-  const axiosClient = useAxios();
-
+export const useChatCompletionStreamMutation = () => {
   return useMutation({
     mutationFn: async (body: { messages: Message[]; model: string }) => {
-      const resp = await axiosClient.post<ChatCompletionResponse>(
-        '/chat/completions',
-        body,
+      const apiKey = useOpenAIStore.getState().apiKey;
+      const response = await fetch(
+        `https://api.openai.com/v1/chat/completions`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            ...body,
+            stream: true,
+          }),
+        },
       );
-      return resp.data;
+
+      if (!response.ok || response.status !== 200) {
+        throw new Error('Network response was not ok');
+      }
+
+      if (!response.body) {
+        throw new Error('Response body is empty');
+      }
+
+      return response.body;
     },
   });
 };
