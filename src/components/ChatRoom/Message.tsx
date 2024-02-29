@@ -35,14 +35,14 @@ const Message = ({
   return (
     <li>
       <Card>
-        <CardHeader className="p-4">
+        <CardHeader className="pt-4 pb-2">
           <CardTitle className="flex items-center gap-4">
             {type === 'sent' && <UserAvatar />}
             {type === 'received' && <ChatGPTAvatar />}
             <span>{type === 'sent' ? 'You' : 'ChatGPT'}</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="py-4">
+        <CardContent className="py-2">
           <Marked value={content} />
         </CardContent>
       </Card>

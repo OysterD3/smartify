@@ -31,7 +31,6 @@ const ChatList = () => {
         id: editChatId,
         title: chats[editChatId].title,
       });
-      console.log(editChatId, chats[editChatId].title);
       return;
     }
 

@@ -63,6 +63,7 @@ const MessageInput = () => {
     const parser = createParser((e) => {
       if (e.type === 'event' && e.data !== '[DONE]') {
         const data = JSON.parse(e.data) as ChatCompletionResponse;
+        console.log(data);
         if (data.choices[0].finish_reason === 'stop') {
           return;
         }
