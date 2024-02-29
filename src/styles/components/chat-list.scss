@@ -1,0 +1,37 @@
+.smartify {
+  &-chat-list {
+    @apply w-full overflow-hidden flex flex-col gap-2;
+    width: 223px;
+  }
+
+  &-chat-list-item {
+    &__btn {
+      @apply flex justify-between items-center gap-2;
+      @apply text-left rounded-lg p-3 text-sm transition-all hover:bg-accent;
+
+      &:hover .smartify-chat-list-item__icon {
+        @apply text-white;
+      }
+
+      &--selected {
+        @apply bg-muted;
+
+        .smartify-chat-list-item__icon {
+          @apply text-white;
+        }
+      }
+
+      span {
+        @apply truncate min-w-0;
+      }
+    }
+
+    &__icon {
+      @apply min-w-0 w-4 h-4 flex-shrink-0 text-black;
+    }
+
+    &__icon--selected {
+      @apply text-muted;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+.smartify-sidebar {
+  @apply flex flex-col w-64 border-r py-6 px-4;
+
+  &__chat-list {
+    @apply flex-1 h-full;
+  }
+}

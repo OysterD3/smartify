@@ -2,6 +2,9 @@ import { createBEM, getElementAttribute } from '@/utils';
 import SettingsDialog from '@/components/SettingsDialog';
 import { useState } from 'react';
 import { GearIcon } from '@radix-ui/react-icons';
+import { ScrollArea } from '@/components/ui/scroll-area.tsx';
+import '@/styles/components/sidebar.scss';
+import ChatList from '@/components/Sidebar/ChatList.tsx';
 
 const bem = createBEM('sidebar');
 const Sidebar = () => {
@@ -18,7 +21,9 @@ const Sidebar = () => {
 
   return (
     <aside className={bem()}>
-      <div className="flex-1 h-full"></div>
+      <ScrollArea className={bem('chat-list')}>
+        <ChatList />
+      </ScrollArea>
       <ul className="flex flex-col" onClick={handleBottomItemClick}>
         <li
           className="flex items-center gap-2 cursor-pointer px-2 py-4"

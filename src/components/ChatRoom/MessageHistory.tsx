@@ -3,7 +3,7 @@ import '@/styles/components/message-history.scss';
 import { useOpenAIStore } from '@/stores/openai.ts';
 import Message from '@/components/ChatRoom/Message.tsx';
 import { useEffect, useRef } from 'react';
-import { ScrollArea } from '@radix-ui/react-scroll-area';
+import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
 const bem = createBEM('message-history');
 

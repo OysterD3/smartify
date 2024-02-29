@@ -19,7 +19,7 @@ interface OpenAIStore {
   selectedModel: string;
   setSelectedModel: (model: string) => void;
   chats: Record<string, Chat>;
-  initializeChat: () => void;
+  initialiseChat: () => void;
   currentViewing: string;
   setCurrentViewing: (id: string) => void;
   defaultInitialPrompt: string;
@@ -29,6 +29,7 @@ interface OpenAIStore {
     data: (messages: Message[]) => { index: number; content: string },
   ) => void;
   appendMessages: (messages: Message[]) => void;
+  setTitle: (data: { title: string; id: string }) => void;
 }
 
 const persistentStore: StateStorage = {
@@ -84,7 +85,7 @@ export const useOpenAIStore = create<OpenAIStore>()(
         }),
       currentViewing: '',
       setCurrentViewing: (id) => set({ currentViewing: id }),
-      initializeChat: () =>
+      initialiseChat: () =>
         set((state) => {
           const id = nanoid();
           state.chats[id] = {
@@ -92,7 +93,10 @@ export const useOpenAIStore = create<OpenAIStore>()(
             messages: [],
             initialPrompt: state.defaultInitialPrompt,
           };
-          return { chats: state.chats };
+          if (Object.keys(state.chats).length === 1) {
+            state.currentViewing = id;
+          }
+          return { chats: state.chats, currentViewing: state.currentViewing };
         }),
       appendMessages: (messages) =>
         set((state) => {
@@ -103,6 +107,19 @@ export const useOpenAIStore = create<OpenAIStore>()(
               [state.currentViewing]: {
                 ...state.chats[state.currentViewing],
                 messages: state.chats[state.currentViewing].messages,
+              },
+            },
+          };
+        }),
+      setTitle: (data) =>
+        set((state) => {
+          state.chats[data.id].title = data.title;
+          return {
+            chats: {
+              ...state.chats,
+              [data.id]: {
+                ...state.chats[data.id],
+                title: data.title,
               },
             },
           };

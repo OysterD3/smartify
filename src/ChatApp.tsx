@@ -1,6 +1,6 @@
 import { createBEM } from '@/utils';
 import './styles/index.scss';
-import Sidebar from '@/components/Sidebar.tsx';
+import Sidebar from '@/components/Sidebar';
 import ChatRoom from '@/components/ChatRoom';
 
 const bem = createBEM();
