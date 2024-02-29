@@ -20,7 +20,7 @@ const MessageInput = () => {
     appendMessages,
     setMessageContent,
   } = useOpenAIStore((state) => ({
-    initialPrompt: state.defaultInitialPrompt,
+    initialPrompt: state.chats[state.currentViewing].initialPrompt,
     messages: state.chats[state.currentViewing].messages,
     selectedModel: state.selectedModel,
     appendMessages: state.appendMessages,
@@ -30,16 +30,9 @@ const MessageInput = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSendMessage = async () => {
-    const clonedMessages = [...messages];
     const message = inputRef.current?.value;
     if (!message) return;
     const msgs = [...messages];
-    if (clonedMessages.length < 1) {
-      msgs.push({
-        role: 'system',
-        content: initialPrompt,
-      });
-    }
     inputRef.current!.value = '';
     appendMessages([
       {
@@ -50,7 +43,11 @@ const MessageInput = () => {
     const response = await chatCompletions.mutateAsync({
       model: selectedModel,
       messages: [
-        ...clonedMessages,
+        {
+          role: 'system',
+          content: initialPrompt,
+        },
+        ...msgs,
         {
           role: 'user',
           content: message,

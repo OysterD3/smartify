@@ -9,35 +9,41 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar.tsx';
+import Marked from '@/components/Marked.tsx';
+
+const ChatGPTAvatar = () => (
+  <Avatar>
+    <AvatarImage src="/chatgpt-logo.png" alt="ChatGPT" />
+    <AvatarFallback>AI</AvatarFallback>
+  </Avatar>
+);
+
+const UserAvatar = () => (
+  <Avatar>
+    <AvatarImage src="/avatar.jpg" alt="Image by catalyststuff on Freepik" />
+    <AvatarFallback>Y</AvatarFallback>
+  </Avatar>
+);
 
 const Message = ({
-  position,
-  children,
+  type,
+  content,
 }: {
-  position: 'sent' | 'received';
-  children: React.ReactNode;
+  type: 'sent' | 'received' | 'prompt';
+  content: string;
 }) => {
   return (
     <li>
       <Card>
         <CardHeader className="p-4">
           <CardTitle className="flex items-center gap-4">
-            <Avatar>
-              <AvatarImage
-                src={position === 'sent' ? '/avatar.jpg' : '/chatgpt-logo.png'}
-                alt={
-                  position === 'sent'
-                    ? 'Image by catalyststuff on Freepik'
-                    : 'ChatGPT'
-                }
-              />
-              <AvatarFallback>{position === 'sent' ? 'Y' : 'C'}</AvatarFallback>
-            </Avatar>
-            <span>{position === 'sent' ? 'You' : 'ChatGPT'}</span>
+            {type === 'sent' && <UserAvatar />}
+            {type === 'received' && <ChatGPTAvatar />}
+            <span>{type === 'sent' ? 'You' : 'ChatGPT'}</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="py-4">
-          <p className="whitespace-pre-wrap">{children}</p>
+          <Marked value={content} />
         </CardContent>
       </Card>
     </li>

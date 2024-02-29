@@ -56,6 +56,12 @@ dependencies:
   eventsource-parser:
     specifier: ^1.1.2
     version: 1.1.2
+  highlight.js:
+    specifier: ^11.9.0
+    version: 11.9.0
+  marked-react:
+    specifier: ^2.0.0
+    version: 2.0.0(react@18.2.0)
   nanoid:
     specifier: ^5.0.6
     version: 5.0.6
@@ -3128,6 +3134,11 @@ packages:
     dependencies:
       function-bind: 1.1.2
 
+  /highlight.js@11.9.0:
+    resolution: {integrity: sha512-fJ7cW7fQGCYAkgv4CPfwFHrfd/cLS4Hau96JuJ+ZTOWhjnhoeN1ub1tFmALm/+lW5z4WCAuAV9bm05AP0mS6Gw==}
+    engines: {node: '>=12.0.0'}
+    dev: false
+
   /humanize-ms@1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
     dependencies:
@@ -3481,6 +3492,21 @@ packages:
     dependencies:
       yallist: 4.0.0
     dev: true
+
+  /marked-react@2.0.0(react@18.2.0):
+    resolution: {integrity: sha512-Mp5HqfONf/RDqFtA+6xw2EjKkSbA8/xNPwyJ8ewLy/q3v21lRsPA7h+HUndVAW/yEIoebvcyzzSDpbjzL/xjZg==}
+    peerDependencies:
+      react: ^16.8.0 || >=17.0.0
+    dependencies:
+      marked: 6.0.0
+      react: 18.2.0
+    dev: false
+
+  /marked@6.0.0:
+    resolution: {integrity: sha512-7E3m/xIlymrFL5gWswIT4CheIE3fDeh51NV09M4x8iOc7NDYlyERcQMLAIHcSlrvwliwbPQ4OGD+MpPSYiQcqw==}
+    engines: {node: '>= 16'}
+    hasBin: true
+    dev: false
 
   /md5@2.3.0:
     resolution: {integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==}

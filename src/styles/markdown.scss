@@ -1,0 +1,80 @@
+@import 'hljs';
+
+.smartify-markdown {
+  &__heading {
+    @apply font-bold mb-2;
+
+    &--h1 {
+      @apply text-4xl;
+    }
+
+    &--h2 {
+      @apply text-3xl;
+    }
+
+    &--h3 {
+      @apply text-2xl;
+    }
+
+    &--h4 {
+      @apply text-xl;
+    }
+
+    &--h5 {
+      @apply text-lg;
+    }
+
+    &--h6 {
+      @apply text-base;
+    }
+  }
+
+  &__paragraph {
+    @apply mb-2;
+  }
+
+  &__blockquote {
+    @apply border-l-4 border-gray-300 pl-2 my-4;
+  }
+
+  &__link {
+    @apply text-blue-500 transition duration-300 ease-in-out hover:text-blue-700;
+  }
+
+  &__list {
+    @apply list-inside list-disc my-4;
+
+    &--ordered {
+      @apply list-decimal;
+    }
+  }
+
+  &__list-item {
+    p {
+      @apply inline;
+    }
+  }
+
+  &-code {
+    &__container {
+      @apply text-sm my-4 rounded-md;
+      background: #22272e;
+
+      .smartify-scroll-area {
+        @apply h-full;
+
+        &__viewport {
+          @apply max-h-[550px];
+        }
+      }
+    }
+
+    &__action-bar {
+      @apply flex justify-between items-center bg-primary-foreground pl-6 pr-2 text-xs rounded-t-md;
+    }
+
+    &__copy {
+      @apply cursor-pointer py-3 px-4;
+    }
+  }
+}

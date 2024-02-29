@@ -8,9 +8,11 @@ import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 const bem = createBEM('message-history');
 
 const MessageHistory = () => {
-  const messages = useOpenAIStore(
-    (state) => state.chats[state.currentViewing].messages,
-  );
+  const { currentViewing, chats } = useOpenAIStore((state) => ({
+    currentViewing: state.currentViewing,
+    chats: state.chats,
+  }));
+  const messages = chats[currentViewing].messages;
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -32,10 +34,9 @@ const MessageHistory = () => {
           message.role === 'system' ? null : (
             <Message
               key={index}
-              position={message.role === 'user' ? 'sent' : 'received'}
-            >
-              {message.content}
-            </Message>
+              type={message.role === 'user' ? 'sent' : 'received'}
+              content={message.content}
+            />
           ),
         )}
       </ul>
