@@ -24,11 +24,8 @@ const Sidebar = () => {
       <ScrollArea className={bem('chat-list')}>
         <ChatList />
       </ScrollArea>
-      <ul className="flex flex-col" onClick={handleBottomItemClick}>
-        <li
-          className="flex items-center gap-2 cursor-pointer px-2 py-4"
-          data-item="settings"
-        >
+      <ul className={bem('system-list')} onClick={handleBottomItemClick}>
+        <li className={bem('system-list-item')} data-item="settings">
           <GearIcon />
           <span>Settings</span>
         </li>

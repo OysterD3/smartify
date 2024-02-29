@@ -10,6 +10,10 @@ import {
   AvatarImage,
 } from '@/components/ui/avatar.tsx';
 import Marked from '@/components/Marked.tsx';
+import { createBEM } from '@/utils';
+import '@/styles/components/message.scss';
+
+const bem = createBEM('message');
 
 const ChatGPTAvatar = () => (
   <Avatar>
@@ -33,16 +37,16 @@ const Message = ({
   content: string;
 }) => {
   return (
-    <li>
+    <li className={bem()}>
       <Card>
-        <CardHeader className="pt-4 pb-2">
-          <CardTitle className="flex items-center gap-4">
+        <CardHeader>
+          <CardTitle>
             {type === 'sent' && <UserAvatar />}
             {type === 'received' && <ChatGPTAvatar />}
             <span>{type === 'sent' ? 'You' : 'ChatGPT'}</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="py-2">
+        <CardContent>
           <Marked value={content} />
         </CardContent>
       </Card>

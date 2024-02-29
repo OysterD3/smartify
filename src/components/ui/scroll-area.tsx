@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-
 import { cn, createBEM } from '@/utils';
+import '@/styles/ui/scroll-area.scss';
 
 const bem = createBEM('scroll-area');
 
@@ -9,14 +9,8 @@ const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Viewport>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
 >(({ className, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root
-    className={cn('relative overflow-hidden', className, bem())}
-    {...props}
-  >
-    <ScrollAreaPrimitive.Viewport
-      ref={ref}
-      className={cn('h-full w-full rounded-[inherit]', bem('viewport'))}
-    >
+  <ScrollAreaPrimitive.Root className={cn(className, bem())} {...props}>
+    <ScrollAreaPrimitive.Viewport ref={ref} className={bem('viewport')}>
       {children}
     </ScrollAreaPrimitive.Viewport>
     <ScrollBar />
@@ -32,17 +26,10 @@ const ScrollBar = React.forwardRef<
   <ScrollAreaPrimitive.ScrollAreaScrollbar
     ref={ref}
     orientation={orientation}
-    className={cn(
-      'flex touch-none select-none transition-colors',
-      orientation === 'vertical' &&
-        'h-full w-2.5 border-l border-l-transparent p-[1px]',
-      orientation === 'horizontal' &&
-        'h-2.5 flex-col border-t border-t-transparent p-[1px]',
-      className,
-    )}
+    className={cn(bem('scrollbar', [`orientation-${orientation}`]), className)}
     {...props}
   >
-    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-border" />
+    <ScrollAreaPrimitive.ScrollAreaThumb className={bem('thumb')} />
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ));
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;

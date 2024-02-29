@@ -1,20 +1,15 @@
 import * as React from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
+import { cn, createBEM } from '@/utils';
+import '@/styles/ui/avatar.scss';
 
-import { cn } from '@/utils';
+const bem = createBEM('avatar');
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
 >(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root
-    ref={ref}
-    className={cn(
-      'relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full',
-      className,
-    )}
-    {...props}
-  />
+  <AvatarPrimitive.Root ref={ref} className={cn(bem(), className)} {...props} />
 ));
 Avatar.displayName = AvatarPrimitive.Root.displayName;
 
@@ -24,7 +19,7 @@ const AvatarImage = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AvatarPrimitive.Image
     ref={ref}
-    className={cn('aspect-square h-full w-full', className)}
+    className={cn(bem('image'), className)}
     {...props}
   />
 ));

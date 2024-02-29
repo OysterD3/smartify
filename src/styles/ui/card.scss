@@ -1,0 +1,23 @@
+.smartify-card {
+  @apply rounded-xl border bg-card text-card-foreground shadow;
+
+  &__header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  &__title {
+    @apply font-semibold leading-none tracking-tight;
+  }
+
+  &__description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  &__content {
+    @apply flex flex-col p-6 pt-0;
+  }
+
+  &__footer {
+    @apply flex items-center p-6 pt-0;
+  }
+}

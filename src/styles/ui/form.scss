@@ -1,0 +1,19 @@
+.smartify-form {
+  &__item {
+    @apply space-y-2;
+  }
+
+  &__message {
+    @apply text-[0.8rem] font-medium text-destructive;
+  }
+
+  &__description {
+    @apply text-[0.8rem] text-muted-foreground;
+  }
+
+  &__label {
+    &#{&}--error {
+      @apply text-destructive;
+    }
+  }
+}

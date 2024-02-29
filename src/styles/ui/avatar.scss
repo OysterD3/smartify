@@ -1,0 +1,7 @@
+.smartify-avatar {
+  @apply relative flex h-8 w-8 shrink-0 overflow-hidden rounded-full;
+
+  &__image {
+    @apply aspect-square h-full w-full;
+  }
+}

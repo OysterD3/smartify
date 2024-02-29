@@ -1,0 +1,13 @@
+.smartify-message {
+  .smartify-card__header {
+    @apply pt-4 pb-2;
+
+    .smartify-card__title {
+      @apply flex items-center gap-4;
+    }
+  }
+
+  .smartify-card__content {
+    @apply py-2;
+  }
+}

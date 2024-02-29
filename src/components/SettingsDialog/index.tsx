@@ -20,6 +20,10 @@ import { useOpenAIStore } from '@/stores/openai.ts';
 import AISettings from '@/components/SettingsDialog/AISettings.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Form } from '@/components/ui/form.tsx';
+import { createBEM } from '@/utils';
+import '@/styles/components/settings-dialog.scss';
+
+const bem = createBEM('settings-dialog');
 
 const settingsSchema = z
   .object({
@@ -80,7 +84,10 @@ const SettingsDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+      <DialogContent
+        className={bem()}
+        onInteractOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
         </DialogHeader>

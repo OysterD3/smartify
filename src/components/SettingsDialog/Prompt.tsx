@@ -15,7 +15,7 @@ const Prompt = () => {
 
   return (
     <Card>
-      <CardContent className="pt-6 gap-4">
+      <CardContent>
         <FormField
           render={({ field }) => (
             <FormItem>

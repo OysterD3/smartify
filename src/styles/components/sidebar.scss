@@ -4,4 +4,12 @@
   &__chat-list {
     @apply flex-1 h-full;
   }
+
+  &__system-list {
+    @apply flex flex-col;
+
+    &-item {
+      @apply flex items-center gap-2 cursor-pointer px-2 py-4;
+    }
+  }
 }

@@ -1,0 +1,9 @@
+.smartify-ai-settings {
+  &__field-wrapper {
+    @apply flex gap-2 items-end;
+
+    .smartify-form__item {
+      @apply flex-1;
+    }
+  }
+}

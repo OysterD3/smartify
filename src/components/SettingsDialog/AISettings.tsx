@@ -21,6 +21,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form.tsx';
+import { createBEM } from '@/utils';
+import '@/styles/components/ai-settings.scss';
+
+const bem = createBEM('ai-settings');
 
 const AISettings = () => {
   const { control, getValues, trigger, resetField } =
@@ -58,12 +62,12 @@ const AISettings = () => {
   };
 
   return (
-    <Card>
-      <CardContent className="pt-6 gap-4">
+    <Card className={bem()}>
+      <CardContent>
         <FormField
           render={({ field, fieldState: { isDirty } }) => (
-            <div className="flex gap-2 items-end">
-              <FormItem className="flex-1">
+            <div className={bem('field-wrapper')}>
+              <FormItem>
                 <FormLabel>API Key</FormLabel>
                 <FormControl>
                   <Input {...field} type="text" id="apiKey" />

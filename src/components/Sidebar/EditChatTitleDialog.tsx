@@ -22,8 +22,8 @@ import { useEffect } from 'react';
 
 const schema = z
   .object({
-    title: z.string(),
-    id: z.string(),
+    title: z.string().min(1),
+    id: z.string().min(1),
   })
   .required();
 
