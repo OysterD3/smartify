@@ -2,10 +2,6 @@
   @apply h-screen flex;
 
   &__main {
-    @apply flex-1 flex flex-col p-4 gap-4;
-
-    > .smartify-scroll-area {
-      @apply flex-1 h-full;
-    }
+    @apply flex-1 flex flex-col;
   }
 }
