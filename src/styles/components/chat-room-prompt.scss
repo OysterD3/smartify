@@ -1,11 +1,11 @@
 .smartify-chat-room-prompt {
-  @apply max-h-24 flex flex-col border-b p-2;
+  @apply max-h-32 flex flex-col border-b p-2 gap-2;
 
   &__prompt {
     @apply line-clamp-2 text-sm text-gray-500;
   }
 
   &__actions {
-    @apply flex justify-end;
+    @apply flex justify-end gap-4;
   }
 }
