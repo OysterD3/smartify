@@ -5,6 +5,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'src-tauri/**'
+      - 'src/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/publish.yml'
 
 jobs:
   publish-tauri:
