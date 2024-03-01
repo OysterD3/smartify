@@ -1,3 +1,11 @@
 .smartify-message-input {
-  @apply flex gap-2;
+  @apply flex flex-col gap-2 border-t;
+
+  .smartify-textarea {
+    @apply border-none focus-visible:ring-0;
+  }
+
+  &__actions {
+    @apply flex items-center gap-2 justify-end p-2;
+  }
 }

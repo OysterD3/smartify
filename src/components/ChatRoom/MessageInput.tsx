@@ -98,6 +98,7 @@ const MessageInput = () => {
     <div className={bem()}>
       <Textarea
         ref={inputRef}
+        placeholder="Type a message..."
         onKeyDown={(e) => {
           if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
@@ -105,9 +106,11 @@ const MessageInput = () => {
           }
         }}
       />
-      <Button type="submit" onClick={handleSendMessage}>
-        Send
-      </Button>
+      <div className={bem('actions')}>
+        <Button size="sm" type="submit" onClick={handleSendMessage}>
+          Send
+        </Button>
+      </div>
     </div>
   );
 };
