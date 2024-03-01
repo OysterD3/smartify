@@ -1,4 +1,6 @@
 .smartify-message {
+  width: calc(100svw - 272px); // 272px is the width of the sidebar and padding
+
   .smartify-card__header {
     @apply pt-4 pb-2;
 
@@ -9,5 +11,9 @@
 
   .smartify-card__content {
     @apply py-2;
+  }
+
+  .smartify-card__footer {
+    @apply flex items-center text-xs gap-4 text-gray-500 pt-0 pb-2;
   }
 }

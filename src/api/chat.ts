@@ -1,8 +1,6 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
-import { useAxios } from './axiosClient.ts';
 import { useMutation } from '@tanstack/react-query';
 import { useOpenAIStore } from '@/stores/openai.ts';
-import { readAllChunks } from '@/utils';
 
 export const chatKeys = createQueryKeys('chat', {
   chatCompletion: (params: { messages: string; model: string }) => [

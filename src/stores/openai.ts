@@ -6,10 +6,13 @@ import {
   type StateStorage,
 } from 'zustand/middleware';
 import { nanoid } from 'nanoid';
+import { get_encoding } from 'tiktoken';
+
+const encoding = get_encoding('cl100k_base');
 
 interface Chat {
   title: string;
-  messages: Message[];
+  messages: (Message & { tokens: number; cost: number; model: string })[];
   initialPrompt: string;
 }
 
@@ -26,7 +29,11 @@ interface OpenAIStore {
   setDefaultInitialPrompt: (prompt: string) => void;
   setInitialPrompt: (prompt: string) => void;
   setMessageContent: (
-    data: (messages: Message[]) => { index: number; content: string },
+    data: (messages: Message[]) => {
+      index: number;
+      content: string;
+      tokens: number;
+    },
   ) => void;
   appendMessages: (messages: Message[]) => void;
   setTitle: (data: { title: string; id: string }) => void;
@@ -73,6 +80,8 @@ export const useOpenAIStore = create<OpenAIStore>()(
             state.chats[state.currentViewing].messages,
           );
           state.chats[state.currentViewing].messages[index].content = content;
+          state.chats[state.currentViewing].messages[index].tokens =
+            encoding.encode(content).length;
           return {
             chats: {
               ...state.chats,
@@ -100,7 +109,14 @@ export const useOpenAIStore = create<OpenAIStore>()(
         }),
       appendMessages: (messages) =>
         set((state) => {
-          state.chats[state.currentViewing].messages.push(...messages);
+          state.chats[state.currentViewing].messages.push(
+            ...messages.map((m) => ({
+              ...m,
+              tokens: encoding.encode(m.content).length,
+              model: state.selectedModel,
+              cost: 0,
+            })),
+          );
           return {
             chats: {
               ...state.chats,
@@ -128,7 +144,7 @@ export const useOpenAIStore = create<OpenAIStore>()(
     {
       name: 'openai-store',
       storage: createJSONStorage(() => persistentStore),
-      version: 2,
+      version: 3,
     },
   ),
 );

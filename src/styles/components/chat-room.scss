@@ -2,6 +2,6 @@
   @apply h-full flex flex-col;
 
   .smartify-scroll-area {
-    @apply flex-1 h-full;
+    @apply flex-1 h-full min-w-0;
   }
 }

@@ -72,7 +72,7 @@
   }
 
   body {
-    @apply bg-background text-foreground h-full overflow-y-hidden;
+    @apply bg-background text-foreground h-full overflow-hidden;
   }
 
   #root {

@@ -1,6 +1,7 @@
 import {
   Card,
   CardContent,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx';
@@ -32,9 +33,13 @@ const UserAvatar = () => (
 const Message = ({
   type,
   content,
+  token,
+  model,
 }: {
   type: 'sent' | 'received' | 'prompt';
   content: string;
+  token?: number;
+  model?: string;
 }) => {
   return (
     <li className={bem()}>
@@ -49,6 +54,14 @@ const Message = ({
         <CardContent>
           <Marked value={content} />
         </CardContent>
+        <CardFooter>
+          <div>
+            Tokens: <strong>{token}</strong>
+          </div>
+          <div>
+            Model: <strong>{model}</strong>
+          </div>
+        </CardFooter>
       </Card>
     </li>
   );

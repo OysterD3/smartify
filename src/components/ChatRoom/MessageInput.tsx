@@ -9,8 +9,11 @@ import { Button } from '@/components/ui/button.tsx';
 import { createBEM, readAllChunks } from '@/utils';
 import '@/styles/components/message-input.scss';
 import { createParser } from 'eventsource-parser';
+import { get_encoding } from 'tiktoken';
 
 const bem = createBEM('message-input');
+
+const encoding = get_encoding('cl100k_base');
 
 const MessageInput = () => {
   const {
@@ -32,7 +35,9 @@ const MessageInput = () => {
   const handleSendMessage = async () => {
     const message = inputRef.current?.value;
     if (!message) return;
-    const msgs = [...messages];
+    const msgs = [
+      ...messages.map((m) => ({ role: m.role, content: m.content })),
+    ];
     inputRef.current!.value = '';
     appendMessages([
       {
@@ -63,8 +68,15 @@ const MessageInput = () => {
     const parser = createParser((e) => {
       if (e.type === 'event' && e.data !== '[DONE]') {
         const data = JSON.parse(e.data) as ChatCompletionResponse;
-        console.log(data);
         if (data.choices[0].finish_reason === 'stop') {
+          setMessageContent((messages) => {
+            const lastMessage = messages[messages.length - 1];
+            return {
+              index: messages.length - 1,
+              content: lastMessage.content,
+              tokens: encoding.encode(lastMessage.content).length,
+            };
+          });
           return;
         }
         setMessageContent((messages) => {
@@ -72,6 +84,7 @@ const MessageInput = () => {
           return {
             index: messages.length - 1,
             content: `${lastMessage.content}${data.choices[0].delta.content}`,
+            tokens: 0,
           };
         });
       }

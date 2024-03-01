@@ -28,14 +28,16 @@ const MessageHistory = () => {
   }, []);
 
   return (
-    <ScrollArea ref={chatRef}>
-      <ul className={bem()}>
+    <ScrollArea className={bem()} ref={chatRef}>
+      <ul className={bem('list')}>
         {messages.map((message, index) =>
           message.role === 'system' ? null : (
             <Message
               key={index}
               type={message.role === 'user' ? 'sent' : 'received'}
               content={message.content}
+              token={message.tokens}
+              model={message.model}
             />
           ),
         )}
