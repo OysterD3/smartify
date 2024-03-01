@@ -1,0 +1,7 @@
+.smartify-chat-room {
+  @apply h-full flex flex-col;
+
+  .smartify-scroll-area {
+    @apply flex-1 h-full;
+  }
+}
